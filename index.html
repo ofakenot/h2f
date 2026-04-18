@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H2F Shipping - Transporte Farmacêutico Especializado</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ruby-red': '#CC0033',
+                        'emerald-green': '#00A86B',
+                        'muted-foreground': '#4b5563',
+                        'foreground': '#1f2937',
+                        'border': 'rgba(255, 255, 255, 0.3)',
+                        'card': 'rgba(255, 255, 255, 0.2)',
+                        'primary': '#CC0033',
+                        'secondary': '#00A86B',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #e0f7fa 0%, #f0f4f8 50%, #f5e6ff 100%);
+            min-height: 100vh;
+            background-attachment: fixed;
+            position: relative;
+            overflow-x: hidden;
+        }
+        body::before, body::after {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        body::before {
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(0, 168, 107, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(204, 0, 51, 0.1) 0%, transparent 50%);
+            animation: blobMove1 8s ease-in-out infinite;
+        }
+        body::after {
+            background:
+                radial-gradient(ellipse at 50% 20%, rgba(0, 168, 107, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 30% 80%, rgba(204, 0, 51, 0.12) 0%, transparent 50%);
+            animation: blobMove2 10s ease-in-out infinite;
+        }
+        @keyframes blobMove1 {
+            0%,100%{transform:translate(0,0) scale(1)}
+            25%{transform:translate(30px,-50px) scale(1.1)}
+            50%{transform:translate(-20px,30px) scale(0.9)}
+            75%{transform:translate(50px,20px) scale(1.05)}
+        }
+        @keyframes blobMove2 {
+            0%,100%{transform:translate(0,0) scale(1)}
+            25%{transform:translate(-40px,30px) scale(0.95)}
+            50%{transform:translate(20px,-40px) scale(1.1)}
+            75%{transform:translate(-30px,-20px) scale(0.9)}
+        }
+        body {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cdefs%3E%3Cfilter id='n' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3C/defs%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+        }
+        .glass-panel {
+            background-color: rgba(255,255,255,0.15);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.4);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08), inset 0 1px 1px rgba(255,255,255,0.3);
+            transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+        }
+        .glass-panel:hover {
+            background-color: rgba(255,255,255,0.25);
+            box-shadow: 0 12px 48px rgba(0,0,0,0.12), inset 0 1px 1px rgba(255,255,255,0.4);
+            border-color: rgba(255,255,255,0.5);
+        }
+        section {
+            background-color: rgba(255,255,255,0.08) !important;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-top: 1px solid rgba(255,255,255,0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        section::before {
+            content:'';
+            position:absolute;
+            top:0;left:0;right:0;bottom:0;
+            background:linear-gradient(135deg,rgba(255,255,255,0.05) 0%,transparent 100%);
+            pointer-events:none;
+        }
+        .scroll-reveal{opacity:0;transform:translateY(30px);transition:all 0.8s cubic-bezier(0.34,1.56,0.64,1)}
+        .scroll-reveal.active{opacity:1;transform:translateY(0)}
+        .scroll-reveal-left{opacity:0;transform:translateX(-50px);transition:all 0.8s cubic-bezier(0.34,1.56,0.64,1)}
+        .scroll-reveal-left.active{opacity:1;transform:translateX(0)}
+        .scroll-reveal-right{opacity:0;transform:translateX(50px);transition:all 0.8s cubic-bezier(0.34,1.56,0.64,1)}
+        .scroll-reveal-right.active{opacity:1;transform:translateX(0)}
+        .card-glow{position:relative;overflow:hidden}
+        .card-glow::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,255,255,0.3) 0%,transparent 70%);opacity:0;transition:opacity 0.4s ease;pointer-events:none}
+        .card-glow:hover::before{opacity:1;animation:shimmer 0.6s ease-in-out}
+        @keyframes shimmer{0%{transform:translate(-100%,-100%)}100%{transform:translate(100%,100%)}}
+        .btn-emerald{background-color:#00A86B;color:white;position:relative;overflow:hidden;transition:all 0.3s ease;box-shadow:0 4px 15px rgba(0,168,107,0.3)}
+        .btn-emerald::before{content:'';position:absolute;top:50%;left:50%;width:0;height:0;background:rgba(255,255,255,0.3);border-radius:50%;transform:translate(-50%,-50%);transition:width 0.6s,height 0.6s}
+        .btn-emerald:hover::before{width:300px;height:300px}
+        .btn-emerald:hover{background-color:#00895a;transform:translateY(-3px);box-shadow:0 8px 25px rgba(0,168,107,0.4)}
+        .btn-ruby{background-color:#CC0033;color:white;position:relative;overflow:hidden;transition:all 0.3s ease;box-shadow:0 4px 15px rgba(204,0,51,0.3)}
+        .btn-ruby::before{content:'';position:absolute;top:50%;left:50%;width:0;height:0;background:rgba(255,255,255,0.3);border-radius:50%;transform:translate(-50%,-50%);transition:width 0.6s,height 0.6s}
+        .btn-ruby:hover::before{width:300px;height:300px}
+        .btn-ruby:hover{background-color:#a3002a;transform:translateY(-3px);box-shadow:0 8px 25px rgba(204,0,51,0.4)}
+        .animate-in{animation:fadeInUp 1s ease-out forwards}
+        @keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        .hover-underline::after{content:'';position:absolute;bottom:-5px;left:0;width:0;height:2px;background-color:#CC0033;transition:width 0.3s ease}
+        .hover-underline:hover::after{width:100%}
+        .card-hover{transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1)}
+        .card-hover:hover{transform:translateY(-8px);box-shadow:0 20px 40px rgba(0,0,0,0.15)}
+        .btn-hover{transition:all 0.3s ease}
+        .btn-hover:hover{transform:translateY(-2px)}
+        .hero-title-small{color:#1f2937;font-size:2rem}
+        .logo-small{width:56rem;max-width:40%;height:auto}
+        .footer-partnership{margin-top:20px;text-align:center}
+        .partnership-logos{display:flex;justify-content:center;align-items:center;gap:20px;margin-bottom:5px}
+        .partnership-logo{max-width:80px;height:auto}
+        .partnership-text{font-size:0.9em;color:#4b5563}
+        h1,h2,h3{background:linear-gradient(135deg,#1f2937 0%,#4b5563 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;transition:all 0.3s ease}
+        .float-animation{animation:float 3s ease-in-out infinite}
+        @keyframes float{0%,100%{transform:translateY(0px)}50%{transform:translateY(-10px)}}
+        img{transition:all 0.4s ease}
+        img:hover{filter:brightness(1.05) drop-shadow(0 0 8px rgba(0,168,107,0.2))}
+        .section-overlay{position:relative}
+        .section-overlay::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg,transparent 0%,rgba(255,255,255,0.05) 100%);pointer-events:none}
+        .lang-switcher{display:flex;align-items:center;gap:4px;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);border-radius:999px;padding:4px 8px;backdrop-filter:blur(10px)}
+        .lang-btn{font-size:11px;font-weight:700;letter-spacing:0.04em;padding:3px 8px;border-radius:999px;cursor:pointer;border:none;background:transparent;color:#4b5563;transition:all 0.2s ease;text-transform:uppercase}
+        .lang-btn:hover{color:#1f2937;background:rgba(255,255,255,0.4)}
+        .lang-btn.active{background:#CC0033;color:white;box-shadow:0 2px 8px rgba(204,0,51,0.3)}
+        .contact-info a{color:inherit;text-decoration:underline}
+        .contact-info a:hover{color:#00A86B}
+
+        /* Verified badge */
+        .verified-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #1d9bf0, #0077cc);
+            border-radius: 50%;
+            flex-shrink: 0;
+            box-shadow: 0 1px 4px rgba(29,155,240,0.4);
+        }
+        .verified-icon svg {
+            width: 11px;
+            height: 11px;
+        }
+
+        .carrier-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            padding: 3px 9px;
+            border-radius: 999px;
+            background: rgba(0, 168, 107, 0.12);
+            color: #00A86B;
+            border: 1px solid rgba(0, 168, 107, 0.25);
+        }
+        .carrier-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 10px;
+            font-weight: 500;
+            padding: 4px 10px;
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.04);
+            color: #4b5563;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+        .carrier-tag svg {
+            width: 12px;
+            height: 12px;
+            opacity: 0.7;
+        }
+        .carrier-divider {
+            width: 100%;
+            height: 1px;
+            background: rgba(0, 0, 0, 0.08);
+            margin: 4px 0;
+        }
+        .logo-container {
+            background: #fff;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 120px;
+        }
+        .logo-container img {
+            height: 45px;
+            width: auto;
+            max-width: 80%;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.08));
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+<!-- ===================== HEADER ===================== -->
+<header class="glass-panel sticky top-0 z-50 transition-all duration-300 shadow-lg">
+    <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+            <img src="images/h2f.png" alt="H2F Shipping Logo" class="h-12 w-auto transition-transform hover:scale-105">
+        </div>
+        <nav class="hidden md:flex items-center space-x-6">
+            <a href="#services" class="text-foreground hover:text-primary transition-colors relative hover-underline" data-i18n="nav_services">Serviços</a>
+            <a href="#tracking" class="text-foreground hover:text-primary transition-colors relative hover-underline" data-i18n="nav_tracking">Rastrear</a>
+            <a href="#about"    class="text-foreground hover:text-primary transition-colors relative hover-underline" data-i18n="nav_about">Sobre</a>
+            <a href="#countries" class="text-foreground hover:text-primary transition-colors relative hover-underline" data-i18n="nav_countries">Países</a>
+            <a href="#contact"  class="text-foreground hover:text-primary transition-colors relative hover-underline" data-i18n="nav_contact">Contato</a>
+        </nav>
+        <div class="hidden md:flex items-center gap-3">
+            <div class="lang-switcher">
+                <button class="lang-btn active" data-lang="pt">PT</button>
+                <button class="lang-btn" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="es">ES</button>
+                <button class="lang-btn" data-lang="fr">FR</button>
+            </div>
+            <a href="https://wa.me/447518453134?text=Olá! Gostaria de solicitar uma cotação." target="_blank" style="text-decoration:none">
+                <button class="btn-ruby text-white px-6 py-2 rounded-md btn-hover" data-i18n="cta_quote">Solicitar Cotação</button>
+            </a>
+        </div>
+        <button id="mobile-menu-btn" class="md:hidden p-2 text-foreground">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+    </div>
+    <nav id="mobile-menu" class="hidden md:hidden glass-panel border-t px-4 py-4 space-y-2">
+        <a href="#services"  class="block py-2 text-foreground hover:text-primary" data-i18n="nav_services">Serviços</a>
+        <a href="#tracking"  class="block py-2 text-foreground hover:text-primary" data-i18n="nav_tracking">Rastrear</a>
+        <a href="#about"     class="block py-2 text-foreground hover:text-primary" data-i18n="nav_about">Sobre</a>
+        <a href="#countries" class="block py-2 text-foreground hover:text-primary" data-i18n="nav_countries">Países</a>
+        <a href="#contact"   class="block py-2 text-foreground hover:text-primary" data-i18n="nav_contact">Contato</a>
+        <div class="lang-switcher mt-2 w-fit">
+            <button class="lang-btn active" data-lang="pt">PT</button>
+            <button class="lang-btn" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="es">ES</button>
+            <button class="lang-btn" data-lang="fr">FR</button>
+        </div>
+    </nav>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="py-20 px-4 text-center relative overflow-hidden">
+    <div class="container mx-auto max-w-4xl relative z-10">
+        <div class="mb-8 animate-in scroll-reveal">
+            <img src="images/h2f.png" alt="H2F Shipping" class="mx-auto mb-6 logo-small float-animation">
+        </div>
+        <h1 class="hero-title-small font-bold mb-6 animate-in scroll-reveal">
+            <span class="drop-shadow-sm" data-i18n="hero_line1">YOU BUY,</span>
+            <span class="drop-shadow-sm" data-i18n="hero_line2">WE SHIP!</span>
+        </h1>
+        <h2 class="text-2xl md:text-3xl font-bold mb-4 animate-in scroll-reveal text-foreground" data-i18n="hero_subtitle">
+            Transporte Farmacêutico Especializado
+        </h2>
+        <p class="text-xl md:text-2xl text-muted-foreground mb-8 animate-in scroll-reveal max-w-3xl mx-auto" data-i18n="hero_desc">
+            A H2F é líder em logística farmacêutica internacional, oferecendo soluções seguras e confiáveis para o transporte de medicamentos e produtos de saúde em todo o mundo.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 animate-in">
+            <div class="text-center p-6 rounded-lg glass-panel card-hover card-glow scroll-reveal">
+                <div class="text-4xl font-bold text-foreground mb-2">15+</div>
+                <div class="text-muted-foreground font-medium" data-i18n="stat_experience">Anos de Experiência</div>
+            </div>
+            <div class="text-center p-6 rounded-lg glass-panel card-hover card-glow scroll-reveal">
+                <div class="text-4xl font-bold text-foreground mb-2">7</div>
+                <div class="text-muted-foreground font-medium" data-i18n="stat_countries">Países de Cobertura</div>
+            </div>
+            <div class="text-center p-6 rounded-lg glass-panel card-hover card-glow scroll-reveal">
+                <div class="text-4xl font-bold text-foreground mb-2">24/7</div>
+                <div class="text-muted-foreground font-medium" data-i18n="stat_support">Suporte Especializado</div>
+            </div>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center animate-in scroll-reveal">
+            <a href="#tracking" style="text-decoration:none" class="w-full sm:w-auto">
+                <button class="btn-emerald text-lg px-8 py-3 rounded-md btn-hover flex items-center justify-center gap-2 w-full">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span data-i18n="btn_track">Rastrear Encomenda</span>
+                </button>
+            </a>
+            <a href="https://wa.me/447518453134?text=Olá! Gostaria de solicitar uma cotação." target="_blank" style="text-decoration:none" class="w-full sm:w-auto">
+                <button class="btn-ruby text-lg px-8 py-3 rounded-md btn-hover flex items-center justify-center gap-2 w-full">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span data-i18n="cta_quote">Solicitar Cotação</span>
+                </button>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== TRACKING ===================== -->
+<section id="tracking" class="py-16 px-4 section-overlay">
+    <div class="container mx-auto max-w-6xl">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-foreground scroll-reveal" data-i18n="tracking_title">Rastrear Encomenda</h2>
+        <p class="text-lg text-muted-foreground text-center mb-2 max-w-2xl mx-auto scroll-reveal" data-i18n="tracking_subtitle">Acesse diretamente o portal oficial de rastreamento de cada transportadora parceira da H2F Shipping.</p>
+        <p class="text-sm text-muted-foreground text-center mb-12 max-w-xl mx-auto scroll-reveal" data-i18n="tracking_hint">Clique no card da transportadora desejada para ser redirecionado ao site oficial.</p>
+
+        <!-- Top 3 cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+
+            <!-- UPS -->
+            <a href="https://www.ups.com/track" target="_blank" rel="noopener" style="text-decoration:none;" class="scroll-reveal">
+                <div class="glass-panel card-hover card-glow rounded-xl overflow-hidden cursor-pointer h-full flex flex-col">
+                    <div class="logo-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/UPS_Logo_Shield_2017.svg" alt="UPS">
+                    </div>
+                    <div class="p-5 flex flex-col gap-3 flex-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-foreground text-lg flex items-center gap-1.5">
+                                UPS
+                                <span class="verified-icon" title="Parceiro Verificado">
+                                    <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M2 6.5L4.5 9L10 3.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                            </span>
+                            <span class="carrier-badge">
+                                <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>
+                                <span data-i18n="carrier_active">Ativo</span>
+                            </span>
+                        </div>
+                        <p class="text-sm text-muted-foreground" style="line-height:1.6;" data-i18n="ups_desc">Rastreamento internacional em tempo real. Ideal para encomendas nos EUA, Europa e Ásia.</p>
+                        <div class="carrier-divider"></div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="carrier-tag"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> <span data-i18n="tag_international">Internacional</span></span>
+                            <span class="carrier-tag"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg> <span data-i18n="tag_realtime">Tempo Real</span></span>
+                            <span class="carrier-tag"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg> <span data-i18n="tag_express">Expresso</span></span>
+                        </div>
+                        <div class="carrier-divider"></div>
+                        <div class="flex items-center gap-2 text-xs text-muted-foreground">
+                            <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+                            ups.com/track
+                        </div>
+                        <div class="btn-emerald text-sm px-5 py-2.5 rounded-md btn-hover flex items-center justify-center gap-2 mt-auto">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <span data-i18n="btn_track_ups">Rastrear no UPS</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- DHL -->
+            <a href="https://www.dhl.com/br-pt/home/tracking.html" target="_blank" rel="noopener" style="text-decoration:none;" class="scroll-reveal">
+                <div class="glass-panel card-hover card-glow rounded-xl overflow-hidden cursor-pointer h-full flex flex-col">
+                    <div class="logo-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/DHL_Logo.svg" alt="DHL">
+                    </div>
+                    <div class="p-5 flex flex-col gap-3 flex-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-foreground text-lg flex items-center gap-1.5">
+                                DHL
+                                <span class="verified-icon" title="Parceiro Verificado">
+                                    <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M2 6.5L4.5 9L10 3.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                            </span>
+                            <span class="carrier-badge">
+                                <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>
+                                <span data-i18n="carrier_active">Ativo</span>
+                            </span>
+                        </div>
+                        <p class="text-sm text-muted-foreground" style="line-height:1.6;" data-i18n="dhl_desc">Líder mundial em logística. Cobertura em mais de 220 países com rastreamento detalhado.</p>
+                        <div class="carrier-divider"></div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="carrier-tag"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> <span data-i18n="tag_global">Global</span></span>
+                            <span class="carrier-tag"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.642.257a6 6 0 01-3.86.517l-2.387-.477a2 2 0 00-1.022.547l-1.168 1.168a2 2 0 001.235 3.397l3.205.16a2 2 0 011.724 1.127l1.328 2.657a2 2 0 003.58 0l1.328-2.657a2 2 0 011.724-1.127l3.205-.16a2 2 0 001.235-3.397l-1.168-1.168z"/></svg> Pharma</span>
+                            <span class="carrier-tag"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg> <span data-i18n="tag_doortodoor">Porta a Porta</span></span>
+                        </div>
+                        <div class="carrier-divider"></div>
+                        <div class="flex items-center gap-2 text-xs text-muted-foreground">
+                            <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+                            dhl.com/tracking
+                        </div>
+                        <div class="btn-emerald text-sm px-5 py-2.5 rounded-md btn-hover flex items-center justify-center gap-2 mt-auto">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <span data-i18n="btn_track_dhl">Rastrear no DHL</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Royal Mail -->
+            <a href="https://www.royalmail.com/track-your-item" target="_blank" rel="noopener" style="text-decoration:none;" class="scroll-reveal">
+                <div class="glass-panel card-hover card-glow rounded-xl overflow-hidden cursor-pointer h-full flex flex-col">
+                    <div class="logo-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/69/Royal_Mail_logo_2024.svg/250px-Royal_Mail_logo_2024.svg.png" alt="Royal Mail">
+                    </div>
+                    <div class="p-5 flex flex-col gap-3 flex-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-foreground text-lg flex items-center gap-1.5">
+                                Royal Mail
+                                <span class="verified-icon" title="Parceiro Verificado">
+                                    <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M2 6.5L4.5 9L10 3.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                            </span>
+                            <span class="carrier-badge">
+                                <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>
+                                <span data-i18n="carrier_active">Ativo</span>
+                            </span>
+                        </div>
+                        <p class="text-sm text-muted-foreground" style="line-height:1.6;" data-i18n="royalmail_desc">Serviço oficial do Reino Unido. Principal parceiro para entregas no UK e Escócia.</p>
+                        <div class="carrier-divider"></div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="carrier-tag"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/></svg> <span data-i18n="tag_uk">Reino Unido</span></span>
+                            <span class="carrier-tag"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg> <span data-i18n="tag_scotland">Escócia</span></span>
+                            <span class="carrier-tag"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg> <span data-i18n="tag_postal">Postal</span></span>
+                        </div>
+                        <div class="carrier-divider"></div>
+                        <div class="flex items-center gap-2 text-xs text-muted-foreground">
+                            <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+                            royalmail.com
+                        </div>
+                        <div class="btn-emerald text-sm px-5 py-2.5 rounded-md btn-hover flex items-center justify-center gap-2 mt-auto">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <span data-i18n="btn_track_royalmail">Rastrear no Royal Mail</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Bottom 2 cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+            <!-- Correios -->
+            <a href="https://rastreamento.correios.com.br/app/index.php" target="_blank" rel="noopener" style="text-decoration:none;" class="scroll-reveal">
+                <div class="glass-panel card-hover card-glow rounded-xl overflow-hidden cursor-pointer h-full flex flex-col md:flex-row">
+                    <div class="logo-container" style="min-width:180px;">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Correios_%282014%29.svg/960px-Correios_%282014%29.svg.png" alt="Correios">
+                    </div>
+                    <div class="p-5 flex flex-col gap-3 flex-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-foreground text-lg flex items-center gap-1.5">
+                                Correios
+                                <span class="verified-icon" title="Parceiro Verificado">
+                                    <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M2 6.5L4.5 9L10 3.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                            </span>
+                            <span class="carrier-badge">
+                                <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>
+                                <span data-i18n="carrier_active">Ativo</span>
+                            </span>
+                        </div>
+                        <p class="text-sm text-muted-foreground" style="line-height:1.6;" data-i18n="correios_desc">Serviço postal oficial do Brasil. Rastreamento nacional e internacional via código.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="carrier-tag"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v14l-7-3-7 3V5z"/></svg> <span data-i18n="tag_brazil">Brasil</span></span>
+                            <span class="carrier-tag"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg> SEDEX</span>
+                            <span class="carrier-tag"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> <span data-i18n="tag_fees">Taxas</span></span>
+                        </div>
+                        <div class="carrier-divider"></div>
+                        <div class="flex items-center justify-between gap-3">
+                            <div class="flex items-center gap-2 text-xs text-muted-foreground">
+                                <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+                                correios.com.br
+                            </div>
+                            <div class="btn-emerald text-sm px-5 py-2.5 rounded-md btn-hover flex items-center gap-2 flex-shrink-0">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                <span data-i18n="btn_track_generic">Rastrear</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- FedEx -->
+            <a href="https://www.fedex.com/apps/fedextrack/" target="_blank" rel="noopener" style="text-decoration:none;" class="scroll-reveal">
+                <div class="glass-panel card-hover card-glow rounded-xl overflow-hidden cursor-pointer h-full flex flex-col md:flex-row">
+                    <div class="logo-container" style="min-width:180px;">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b9/FedEx_Corporation_-_2016_Logo.svg" alt="FedEx">
+                    </div>
+                    <div class="p-5 flex flex-col gap-3 flex-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-foreground text-lg flex items-center gap-1.5">
+                                FedEx
+                                <span class="verified-icon" title="Parceiro Verificado">
+                                    <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M2 6.5L4.5 9L10 3.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                            </span>
+                            <span class="carrier-badge">
+                                <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>
+                                <span data-i18n="carrier_active">Ativo</span>
+                            </span>
+                        </div>
+                        <p class="text-sm text-muted-foreground" style="line-height:1.6;" data-i18n="fedex_desc">Referência em entregas expressas. Cobertura prioritária para EUA e mercados asiáticos.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="carrier-tag"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> <span data-i18n="tag_usa">EUA</span></span>
+                            <span class="carrier-tag"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg> <span data-i18n="tag_asia">Ásia</span></span>
+                            <span class="carrier-tag"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A10.116 10.116 0 006.11 14.24c0-2.47-.567-4.808-1.581-6.89l-.057-.116m6.239 12.33a11.963 11.963 0 01-8.177-3.442"/></svg> <span data-i18n="tag_priority">Prioritário</span></span>
+                        </div>
+                        <div class="carrier-divider"></div>
+                        <div class="flex items-center justify-between gap-3">
+                            <div class="flex items-center gap-2 text-xs text-muted-foreground">
+                                <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+                                fedex.com
+                            </div>
+                            <div class="btn-emerald text-sm px-5 py-2.5 rounded-md btn-hover flex items-center gap-2 flex-shrink-0">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                <span data-i18n="btn_track_generic">Rastrear</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== SERVICES ===================== -->
+<section id="services" class="py-16 px-4 section-overlay">
+    <div class="container mx-auto max-w-6xl">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-foreground scroll-reveal" data-i18n="services_title">Nossos Serviços Especializados</h2>
+        <p class="text-lg text-muted-foreground text-center mb-12 max-w-2xl mx-auto scroll-reveal" data-i18n="services_subtitle">Soluções completas para o transporte seguro de produtos farmacêuticos</p>
+        <div class="mb-16">
+            <div class="relative rounded-2xl overflow-hidden shadow-2xl scroll-reveal">
+                <img src="images/caminhao-h2f.jpeg" alt="Caminhão H2F" class="w-full h-96 md:h-[500px] object-cover">
+                <div class="absolute inset-0 bg-black/50"></div>
+                <div class="absolute bottom-8 left-8 text-white z-10">
+                    <h3 class="text-2xl md:text-3xl font-bold mb-2" style="-webkit-text-fill-color:white;background:none;text-shadow:2px 2px 4px rgba(0,0,0,0.8)" data-i18n="fleet_title">Frota Especializada</h3>
+                    <p class="text-lg max-w-md" style="text-shadow:1px 1px 2px rgba(0,0,0,0.8)" data-i18n="fleet_desc">Caminhões equipados com sistema PHARMA COOL para transporte climatizado de medicamentos</p>
+                </div>
+            </div>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="rounded-lg shadow-sm card-hover card-glow glass-panel scroll-reveal">
+                <div class="p-6">
+                    <div class="w-12 h-12 bg-emerald-green/20 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="h-6 w-6 text-emerald-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-foreground" data-i18n="svc1_title">Transporte Climatizado</h3>
+                    <p class="text-muted-foreground" data-i18n="svc1_desc">Manutenção rigorosa da cadeia de frio com monitoramento 24/7.</p>
+                </div>
+            </div>
+            <div class="rounded-lg shadow-sm card-hover card-glow glass-panel scroll-reveal">
+                <div class="p-6">
+                    <div class="w-12 h-12 bg-emerald-green/20 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="h-6 w-6 text-emerald-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-foreground" data-i18n="svc2_title">Logística Internacional</h3>
+                    <p class="text-muted-foreground" data-i18n="svc2_desc">Expertise em regulamentações alfandegárias e transporte global.</p>
+                </div>
+            </div>
+            <div class="rounded-lg shadow-sm card-hover card-glow glass-panel scroll-reveal">
+                <div class="p-6">
+                    <div class="w-12 h-12 bg-emerald-green/20 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="h-6 w-6 text-emerald-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M10 16h.01"/></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-foreground" data-i18n="svc3_title">Documentação Completa</h3>
+                    <p class="text-muted-foreground" data-i18n="svc3_desc">Gerenciamento de toda a papelada necessária para o transporte.</p>
+                </div>
+            </div>
+            <div class="rounded-lg shadow-sm card-hover card-glow glass-panel scroll-reveal">
+                <div class="p-6">
+                    <div class="w-12 h-12 bg-emerald-green/20 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="h-6 w-6 text-emerald-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-foreground" data-i18n="svc4_title">Suporte 24/7</h3>
+                    <p class="text-muted-foreground" data-i18n="svc4_desc">Equipe dedicada disponível a qualquer hora para assistência.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== ABOUT ===================== -->
+<section id="about" class="py-16 px-4 section-overlay">
+    <div class="container mx-auto max-w-6xl">
+        <div class="scroll-reveal">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-foreground text-center" data-i18n="about_title">Compromisso com a Excelência</h2>
+            <p class="text-lg text-muted-foreground mb-6 text-center max-w-3xl mx-auto" data-i18n="about_desc">A H2F Shipping nasceu da necessidade de um transporte farmacêutico <strong>confiável e especializado</strong>. Nossa missão é garantir que produtos de saúde cheguem ao seu destino com a <strong>máxima integridade e segurança</strong>, respeitando todas as normas internacionais.</p>
+            <div class="grid md:grid-cols-3 gap-6 mt-10">
+                <div class="p-6 rounded-xl glass-panel card-glow scroll-reveal">
+                    <h4 class="font-semibold text-foreground mb-2 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-emerald-green flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        <span data-i18n="about_q1_title">Qualidade Assegurada</span>
+                    </h4>
+                    <p class="text-sm text-muted-foreground" data-i18n="about_q1_desc">Certificações e protocolos rigorosos em toda a cadeia logística.</p>
+                </div>
+                <div class="p-6 rounded-xl glass-panel card-glow scroll-reveal">
+                    <h4 class="font-semibold text-foreground mb-2 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-emerald-green flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        <span data-i18n="about_q2_title">Tecnologia de Ponta</span>
+                    </h4>
+                    <p class="text-sm text-muted-foreground" data-i18n="about_q2_desc">Monitoramento em tempo real e rastreamento avançado de cargas.</p>
+                </div>
+                <div class="p-6 rounded-xl glass-panel card-glow scroll-reveal">
+                    <h4 class="font-semibold text-foreground mb-2 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-emerald-green flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        <span data-i18n="about_q3_title">Equipe Especializada</span>
+                    </h4>
+                    <p class="text-sm text-muted-foreground" data-i18n="about_q3_desc">Profissionais treinados e dedicados em logística farmacêutica.</p>
+                </div>
+            </div>
+            <div class="text-center mt-10">
+                <a href="https://www.instagram.com/h2fshipping" target="_blank" style="text-decoration:none">
+                    <button class="btn-emerald text-lg px-8 py-3 rounded-md btn-hover" data-i18n="btn_about_cta">Conheça Nossa História</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== GLOBE ===================== -->
+<script src="//unpkg.com/globe.gl"></script>
+<section id="countries" class="py-16 px-4 section-overlay">
+    <div class="container mx-auto max-w-6xl">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-foreground scroll-reveal" data-i18n="countries_title">Cobertura Global</h2>
+        <p class="text-lg text-muted-foreground text-center mb-12 max-w-2xl mx-auto scroll-reveal" data-i18n="countries_subtitle">Presença estratégica nos principais mercados farmacêuticos mundiais</p>
+        <div class="flex justify-center scroll-reveal mb-12">
+            <div id="globe-wrapper" class="rounded-xl relative overflow-hidden shadow-2xl"
+                 style="width:100%;max-width:700px;height:500px;background-color:#000005;background-image:url('https://assets.codepen.io/127738/milky-way.jpg');background-size:cover;background-position:center;border:1px solid rgba(255,255,255,0.1);box-shadow:inset 0 0 150px rgba(0,0,0,0.8)">
+                <div id="globe-viz" style="width:100%;height:100%"></div>
+                <button id="toggle-map-btn" class="absolute top-4 right-4 z-20 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white text-xs px-4 py-2 rounded-full flex items-center gap-2 transition-all cursor-pointer shadow-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
+                    <span data-i18n="globe_explore">Explorar & Zoom</span>
+                </button>
+                <div id="zoom-hint" class="absolute bottom-4 left-4 pointer-events-none opacity-0 transition-opacity duration-300 z-20">
+                    <span class="text-[10px] text-white/60 bg-black/50 px-2 py-1 rounded border border-white/10">H2F MAP</span>
+                </div>
+            </div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 scroll-reveal">
+            <div class="flex flex-col items-center p-4 rounded-xl glass-panel card-glow hover:scale-105 transition-transform">
+                <div class="mb-2 h-12 w-16 shadow-md rounded overflow-hidden flex items-center justify-center bg-gray-100">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/0/05/Flag_of_Brazil.svg" alt="Brasil" class="w-full h-full object-cover">
+                </div>
+                <p class="text-sm font-semibold text-foreground text-center" data-i18n="country_brazil">Brasil</p>
+            </div>
+            <div class="flex flex-col items-center p-4 rounded-xl glass-panel card-glow hover:scale-105 transition-transform">
+                <div class="mb-2 h-12 w-16 shadow-md rounded overflow-hidden flex items-center justify-center bg-gray-100">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/27/Flag_of_Paraguay.svg" alt="Paraguai" class="w-full h-full object-cover">
+                </div>
+                <p class="text-sm font-semibold text-foreground text-center" data-i18n="country_paraguay">Paraguai</p>
+            </div>
+            <div class="flex flex-col items-center p-4 rounded-xl glass-panel card-glow hover:scale-105 transition-transform">
+                <div class="mb-2 h-12 w-16 shadow-md rounded overflow-hidden flex items-center justify-center bg-gray-100">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg" alt="EUA" class="w-full h-full object-cover">
+                </div>
+                <p class="text-sm font-semibold text-foreground text-center" data-i18n="country_usa">EUA</p>
+            </div>
+            <div class="flex flex-col items-center p-4 rounded-xl glass-panel card-glow hover:scale-105 transition-transform">
+                <div class="mb-2 h-12 w-16 shadow-md rounded overflow-hidden flex items-center justify-center bg-gray-100">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg" alt="Reino Unido" class="w-full h-full object-cover">
+                </div>
+                <p class="text-sm font-semibold text-foreground text-center" data-i18n="country_uk">Reino Unido</p>
+            </div>
+            <div class="flex flex-col items-center p-4 rounded-xl glass-panel card-glow hover:scale-105 transition-transform">
+                <div class="mb-2 h-12 w-16 shadow-md rounded overflow-hidden flex items-center justify-center bg-gray-100">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/10/Flag_of_Scotland.svg" alt="Escócia" class="w-full h-full object-cover">
+                </div>
+                <p class="text-sm font-semibold text-foreground text-center" data-i18n="country_scotland">Escócia</p>
+            </div>
+            <div class="flex flex-col items-center p-4 rounded-xl glass-panel card-glow hover:scale-105 transition-transform">
+                <div class="mb-2 h-12 w-16 shadow-md rounded overflow-hidden flex items-center justify-center bg-gray-100">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Flag_of_the_United_Arab_Emirates.svg" alt="E.A.U" class="w-full h-full object-cover">
+                </div>
+                <p class="text-sm font-semibold text-foreground text-center" data-i18n="country_uae">Dubai</p>
+            </div>
+            <div class="flex flex-col items-center p-4 rounded-xl glass-panel card-glow hover:scale-105 transition-transform">
+                <div class="mb-2 h-12 w-16 shadow-md rounded overflow-hidden flex items-center justify-center bg-gray-100">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg" alt="China" class="w-full h-full object-cover">
+                </div>
+                <p class="text-sm font-semibold text-foreground text-center" data-i18n="country_china">China</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== CONTACT ===================== -->
+<section id="contact" class="py-16 px-4 section-overlay">
+    <div class="container mx-auto max-w-4xl">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-foreground scroll-reveal" data-i18n="contact_title">Fale Conosco</h2>
+        <p class="text-lg text-muted-foreground text-center mb-12 max-w-2xl mx-auto scroll-reveal" data-i18n="contact_subtitle">Entre em contato para solicitar uma cotação ou tirar suas dúvidas.</p>
+        <div class="p-8 rounded-xl glass-panel scroll-reveal">
+            <form class="space-y-6" onsubmit="return false;">
+                <div>
+                    <label for="name" class="block text-sm font-medium text-foreground mb-1" data-i18n="form_name">Nome Completo</label>
+                    <input type="text" id="name" class="w-full p-3 border border-gray-300 rounded-md focus:ring-emerald-green focus:border-emerald-green bg-white/50 backdrop-blur-sm transition-all" data-i18n-placeholder="form_name_ph" placeholder="Seu nome">
+                </div>
+                <div>
+                    <label for="email" class="block text-sm font-medium text-foreground mb-1" data-i18n="form_email">E-mail</label>
+                    <input type="email" id="email" class="w-full p-3 border border-gray-300 rounded-md focus:ring-emerald-green focus:border-emerald-green bg-white/50 backdrop-blur-sm transition-all" data-i18n-placeholder="form_email_ph" placeholder="seu.email@exemplo.com">
+                </div>
+                <div>
+                    <label for="message" class="block text-sm font-medium text-foreground mb-1" data-i18n="form_message">Mensagem</label>
+                    <textarea id="message" rows="4" class="w-full p-3 border border-gray-300 rounded-md focus:ring-emerald-green focus:border-emerald-green bg-white/50 backdrop-blur-sm transition-all" data-i18n-placeholder="form_message_ph" placeholder="Sua mensagem ou detalhes da cotação"></textarea>
+                </div>
+                <button type="submit" class="btn-emerald w-full text-lg px-8 py-3 rounded-md btn-hover" data-i18n="form_submit">Enviar Mensagem</button>
+            </form>
+            <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="rounded-lg shadow-sm p-6 text-center glass-panel card-hover card-glow scroll-reveal">
+                    <svg class="h-8 w-8 text-ruby-red mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    <h3 class="font-semibold mb-2 text-foreground">E-mail</h3>
+                    <p class="text-muted-foreground">hs2shipping@gmail.com</p>
+                </div>
+                <div class="rounded-lg shadow-sm p-6 text-center glass-panel card-hover card-glow scroll-reveal">
+                    <svg class="h-8 w-8 text-emerald-green mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                    <h3 class="font-semibold mb-2 text-foreground">WhatsApp</h3>
+                    <p class="text-muted-foreground" data-i18n="whatsapp_available">Disponível 24/7</p>
+                </div>
+                <div class="rounded-lg shadow-sm p-6 text-center glass-panel card-hover card-glow scroll-reveal">
+                    <svg class="h-8 w-8 text-muted-foreground mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <h3 class="font-semibold mb-2 text-foreground">Instagram</h3>
+                    <p class="text-muted-foreground">@h2fshipping</p>
+                </div>
+            </div>
+            <a href="https://wa.me/447518453134?text=Olá! Gostaria de solicitar uma cotação agora." target="_blank" style="text-decoration:none">
+                <button class="btn-ruby mt-10 text-lg px-8 py-3 rounded-md btn-hover flex items-center justify-center gap-2 mx-auto">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    <span data-i18n="cta_quote_now">Solicitar Cotação Agora</span>
+                </button>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="glass-panel py-12 px-4">
+    <div class="container mx-auto max-w-6xl">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-center md:text-left">
+            <div class="footer-partnership flex flex-col items-center md:items-start md:block">
+                <div class="flex flex-col items-center gap-2 md:flex-row md:items-center md:gap-4">
+                    <img src="images/h2f.png" alt="H2F Ship" class="partnership-logo flex-shrink-0">
+                    <div class="partnership-text font-bold text-foreground md:order-2">HUB</div>
+                    <img src="images/logobro.png" alt="Pharmaceutics" class="partnership-logo flex-shrink-0 md:order-3">
+                </div>
+            </div>
+            <div>
+                <h3 class="font-semibold mb-4 text-foreground" data-i18n="footer_products">Produtos</h3>
+                <ul class="space-y-2 text-sm text-muted-foreground">
+                    <li data-i18n="footer_p1">Medicamentos Controlados</li>
+                    <li data-i18n="footer_p2">Suplementos Nutricionais</li>
+                    <li data-i18n="footer_p3">Produtos Farmacêuticos</li>
+                    <li data-i18n="footer_p4">Matérias-Primas</li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-semibold mb-4 text-foreground" data-i18n="footer_services">Serviços</h3>
+                <ul class="space-y-2 text-sm text-muted-foreground">
+                    <li data-i18n="svc1_title">Transporte Climatizado</li>
+                    <li data-i18n="svc2_title">Logística Internacional</li>
+                    <li data-i18n="svc3_title">Documentação Completa</li>
+                    <li data-i18n="footer_tracking">Rastreamento 24/7</li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-semibold mb-4 text-foreground" data-i18n="footer_contact">Contato</h3>
+                <div class="space-y-2 text-sm text-muted-foreground flex flex-col items-center md:items-start">
+                    <div class="flex items-center gap-2 contact-info">
+                        <svg class="h-4 w-4 text-ruby-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        <a href="mailto:hs2shipping@gmail.com">hs2shipping@gmail.com</a>
+                    </div>
+                    <div class="flex items-center gap-2 contact-info">
+                        <svg class="h-4 w-4 text-emerald-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                        <span data-i18n="whatsapp_available">WhatsApp disponível</span>
+                    </div>
+                    <div class="flex items-center gap-2 contact-info">
+                        <svg class="h-4 w-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <span>@h2fshipping</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-white/30 pt-8 text-center">
+            <p class="text-sm text-muted-foreground" data-i18n="footer_copy">© 2025 H2F Shipping. Todos os direitos reservados.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- ===================== GLOBE SCRIPT ===================== -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const globeContainer = document.getElementById('globe-wrapper');
+    const globeViz = document.getElementById('globe-viz');
+    if (!globeContainer || !globeViz || typeof Globe === 'undefined') return;
+
+    const centerLoc = { lat: 51.5074, lng: -0.1278, code: 'UK' };
+    const destinations = [
+        { lat: -14.2350, lng: -51.9253, code: 'BR' },
+        { lat: -23.4425, lng: -58.4438, code: 'PY' },
+        { lat:  39.0902, lng: -98.7129, code: 'USA' },
+        { lat:  56.4907, lng:  -4.2026, code: 'SCT' },
+        { lat:  23.4241, lng:  53.8478, code: 'UAE' },
+        { lat:  35.8617, lng: 104.1954, code: 'CN' }
+    ];
+    const allPoints = [centerLoc, ...destinations];
+    const arcsData = destinations.map(d => ({
+        startLat: centerLoc.lat, startLng: centerLoc.lng,
+        endLat: d.lat, endLng: d.lng,
+        color: ['#00FF88','#FF4444']
+    }));
+
+    const globe = Globe()(globeViz)
+        .width(globeContainer.clientWidth)
+        .height(globeContainer.clientHeight)
+        .globeImageUrl('//unpkg.com/three-globe/example/img/earth-night.jpg')
+        .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
+        .backgroundColor('rgba(0,0,0,0)')
+        .arcsData(arcsData).arcColor('color')
+        .arcDashLength(0.5).arcDashGap(2).arcDashAnimateTime(1500).arcStroke(1.2)
+        .labelsData(allPoints).labelLat(d=>d.lat).labelLng(d=>d.lng)
+        .labelText(d=>d.code).labelSize(1.5).labelDotRadius(0.5)
+        .labelColor(()=>'rgba(255,255,255,0.9)').labelResolution(2);
+
+    globe.controls().autoRotate = true;
+    globe.controls().autoRotateSpeed = 0.5;
+    globe.controls().enableZoom = false;
+    globe.controls().enableRotate = false;
+    globe.pointOfView({ lat: 30, lng: -20, altitude: 2.5 });
+
+    const toggleBtn = document.getElementById('toggle-map-btn');
+    const zoomHint  = document.getElementById('zoom-hint');
+    let isActive = false;
+
+    toggleBtn.addEventListener('click', () => {
+        isActive = !isActive;
+        globe.controls().enableZoom = isActive;
+        globe.controls().enableRotate = isActive;
+        globe.controls().autoRotate = !isActive;
+        zoomHint.classList.toggle('opacity-0', !isActive);
+        if (!isActive) globe.pointOfView({ lat:30, lng:-20, altitude:2.5 }, 1000);
+        const span = toggleBtn.querySelector('[data-i18n]');
+        if (span) {
+            span.setAttribute('data-i18n', isActive ? 'globe_close' : 'globe_explore');
+            if (window.__h2fApplyTranslations) window.__h2fApplyTranslations(window.__h2fCurrentLang || 'pt');
+        }
+        toggleBtn.classList.toggle('bg-green-500/20', isActive);
+        toggleBtn.classList.toggle('border-green-500/50', isActive);
+        toggleBtn.classList.toggle('text-green-400', isActive);
+    });
+
+    window.addEventListener('resize', () => {
+        globe.width(globeContainer.clientWidth);
+        globe.height(globeContainer.clientHeight);
+    });
+});
+</script>
+
+<!-- ===================== i18n ENGINE ===================== -->
+<script>
+const translations = {
+    pt: {
+        /* nav */
+        nav_services:'Serviços', nav_tracking:'Rastrear', nav_about:'Sobre', nav_countries:'Países', nav_contact:'Contato',
+        /* cta */
+        cta_quote:'Solicitar Cotação', cta_quote_now:'Solicitar Cotação Agora',
+        btn_track:'Rastrear Encomenda', btn_about_cta:'Conheça Nossa História',
+        /* hero */
+        hero_line1:'YOU BUY,', hero_line2:'WE SHIP!',
+        hero_subtitle:'Transporte Farmacêutico Especializado',
+        hero_desc:'A H2F é líder em logística farmacêutica internacional, oferecendo soluções seguras e confiáveis para o transporte de medicamentos e produtos de saúde em todo o mundo.',
+        stat_experience:'Anos de Experiência', stat_countries:'Países de Cobertura', stat_support:'Suporte Especializado',
+        /* tracking section */
+        tracking_title:'Rastrear Encomenda',
+        tracking_subtitle:'Acesse diretamente o portal oficial de rastreamento de cada transportadora parceira da H2F Shipping.',
+        tracking_hint:'Clique no card da transportadora desejada para ser redirecionado ao site oficial.',
+        carrier_active:'Ativo',
+        /* carrier descriptions */
+        ups_desc:'Rastreamento internacional em tempo real. Ideal para encomendas nos EUA, Europa e Ásia.',
+        dhl_desc:'Líder mundial em logística. Cobertura em mais de 220 países com rastreamento detalhado.',
+        royalmail_desc:'Serviço oficial do Reino Unido. Principal parceiro para entregas no UK e Escócia.',
+        correios_desc:'Serviço postal oficial do Brasil. Rastreamento nacional e internacional via código.',
+        fedex_desc:'Referência em entregas expressas. Cobertura prioritária para EUA e mercados asiáticos.',
+        /* carrier buttons */
+        btn_track_ups:'Rastrear no UPS',
+        btn_track_dhl:'Rastrear no DHL',
+        btn_track_royalmail:'Rastrear no Royal Mail',
+        btn_track_generic:'Rastrear',
+        /* carrier tags */
+        tag_international:'Internacional', tag_realtime:'Tempo Real', tag_express:'Expresso',
+        tag_global:'Global', tag_doortodoor:'Porta a Porta',
+        tag_uk:'Reino Unido', tag_scotland:'Escócia', tag_postal:'Postal',
+        tag_brazil:'Brasil', tag_fees:'Taxas',
+        tag_usa:'EUA', tag_asia:'Ásia', tag_priority:'Prioritário',
+        /* services */
+        services_title:'Nossos Serviços Especializados',
+        services_subtitle:'Soluções completas para o transporte seguro de produtos farmacêuticos',
+        fleet_title:'Frota Especializada',
+        fleet_desc:'Caminhões equipados com sistema PHARMA COOL para transporte climatizado de medicamentos',
+        svc1_title:'Transporte Climatizado', svc1_desc:'Manutenção rigorosa da cadeia de frio com monitoramento 24/7.',
+        svc2_title:'Logística Internacional', svc2_desc:'Expertise em regulamentações alfandegárias e transporte global.',
+        svc3_title:'Documentação Completa', svc3_desc:'Gerenciamento de toda a papelada necessária para o transporte.',
+        svc4_title:'Suporte 24/7', svc4_desc:'Equipe dedicada disponível a qualquer hora para assistência.',
+        /* about */
+        about_title:'Compromisso com a Excelência',
+        about_desc:'A H2F Shipping nasceu da necessidade de um transporte farmacêutico <strong>confiável e especializado</strong>. Nossa missão é garantir que produtos de saúde cheguem ao seu destino com a <strong>máxima integridade e segurança</strong>, respeitando todas as normas internacionais.',
+        about_q1_title:'Qualidade Assegurada', about_q1_desc:'Certificações e protocolos rigorosos em toda a cadeia logística.',
+        about_q2_title:'Tecnologia de Ponta', about_q2_desc:'Monitoramento em tempo real e rastreamento avançado de cargas.',
+        about_q3_title:'Equipe Especializada', about_q3_desc:'Profissionais treinados e dedicados em logística farmacêutica.',
+        /* globe */
+        countries_title:'Cobertura Global', countries_subtitle:'Presença estratégica nos principais mercados farmacêuticos mundiais',
+        globe_explore:'Explorar & Zoom', globe_close:'Fechar Mapa',
+        country_brazil:'Brasil', country_paraguay:'Paraguai', country_usa:'EUA',
+        country_uk:'Reino Unido', country_scotland:'Escócia', country_uae:'Dubai', country_china:'China',
+        /* contact */
+        contact_title:'Fale Conosco', contact_subtitle:'Entre em contato para solicitar uma cotação ou tirar suas dúvidas.',
+        form_name:'Nome Completo', form_name_ph:'Seu nome',
+        form_email:'E-mail', form_email_ph:'seu.email@exemplo.com',
+        form_message:'Mensagem', form_message_ph:'Sua mensagem ou detalhes da cotação',
+        form_submit:'Enviar Mensagem', whatsapp_available:'Disponível 24/7',
+        /* footer */
+        footer_products:'Produtos', footer_services:'Serviços', footer_contact:'Contato',
+        footer_tracking:'Rastreamento 24/7',
+        footer_p1:'Medicamentos Controlados', footer_p2:'Suplementos Nutricionais',
+        footer_p3:'Produtos Farmacêuticos', footer_p4:'Matérias-Primas',
+        footer_copy:'© 2025 H2F Shipping. Todos os direitos reservados.',
+    },
+    en: {
+        nav_services:'Services', nav_tracking:'Track', nav_about:'About', nav_countries:'Countries', nav_contact:'Contact',
+        cta_quote:'Request Quote', cta_quote_now:'Request Quote Now',
+        btn_track:'Track Shipment', btn_about_cta:'Our Story',
+        hero_line1:'YOU BUY,', hero_line2:'WE SHIP!',
+        hero_subtitle:'Specialized Pharmaceutical Transport',
+        hero_desc:'H2F is a leader in international pharmaceutical logistics, offering safe and reliable solutions for the transport of medicines and healthcare products worldwide.',
+        stat_experience:'Years of Experience', stat_countries:'Countries Covered', stat_support:'Specialized Support',
+        tracking_title:'Track Shipment',
+        tracking_subtitle:'Access the official tracking portal of each H2F Shipping partner carrier directly.',
+        tracking_hint:'Click on the desired carrier card to be redirected to the official website.',
+        carrier_active:'Active',
+        ups_desc:'Real-time international tracking. Ideal for shipments in the USA, Europe and Asia.',
+        dhl_desc:'World leader in logistics. Coverage in over 220 countries with detailed tracking.',
+        royalmail_desc:'Official UK service. Primary partner for deliveries in the UK and Scotland.',
+        correios_desc:'Official postal service of Brazil. National and international tracking by code.',
+        fedex_desc:'Reference in express deliveries. Priority coverage for the USA and Asian markets.',
+        btn_track_ups:'Track with UPS',
+        btn_track_dhl:'Track with DHL',
+        btn_track_royalmail:'Track with Royal Mail',
+        btn_track_generic:'Track',
+        tag_international:'International', tag_realtime:'Real Time', tag_express:'Express',
+        tag_global:'Global', tag_doortodoor:'Door to Door',
+        tag_uk:'United Kingdom', tag_scotland:'Scotland', tag_postal:'Postal',
+        tag_brazil:'Brazil', tag_fees:'Duties',
+        tag_usa:'USA', tag_asia:'Asia', tag_priority:'Priority',
+        services_title:'Our Specialized Services',
+        services_subtitle:'Complete solutions for the safe transport of pharmaceutical products',
+        fleet_title:'Specialized Fleet',
+        fleet_desc:'Trucks equipped with the PHARMA COOL system for temperature-controlled medicine transport',
+        svc1_title:'Temperature-Controlled Transport', svc1_desc:'Strict cold chain maintenance with 24/7 monitoring.',
+        svc2_title:'International Logistics', svc2_desc:'Expertise in customs regulations and global transport.',
+        svc3_title:'Complete Documentation', svc3_desc:'Management of all paperwork required for transport.',
+        svc4_title:'24/7 Support', svc4_desc:'Dedicated team available at any time for assistance.',
+        about_title:'Commitment to Excellence',
+        about_desc:'H2F Shipping was born from the need for <strong>reliable and specialized</strong> pharmaceutical transport. Our mission is to ensure health products reach their destination with <strong>maximum integrity and safety</strong>, complying with all international standards.',
+        about_q1_title:'Assured Quality', about_q1_desc:'Rigorous certifications and protocols throughout the logistics chain.',
+        about_q2_title:'Cutting-Edge Technology', about_q2_desc:'Real-time monitoring and advanced cargo tracking.',
+        about_q3_title:'Specialized Team', about_q3_desc:'Trained professionals dedicated to pharmaceutical logistics.',
+        countries_title:'Global Coverage', countries_subtitle:"Strategic presence in the world's leading pharmaceutical markets",
+        globe_explore:'Explore & Zoom', globe_close:'Close Map',
+        country_brazil:'Brazil', country_paraguay:'Paraguay', country_usa:'USA',
+        country_uk:'United Kingdom', country_scotland:'Scotland', country_uae:'Dubai', country_china:'China',
+        contact_title:'Contact Us', contact_subtitle:'Get in touch to request a quote or ask your questions.',
+        form_name:'Full Name', form_name_ph:'Your name',
+        form_email:'Email', form_email_ph:'your.email@example.com',
+        form_message:'Message', form_message_ph:'Your message or quote details',
+        form_submit:'Send Message', whatsapp_available:'Available 24/7',
+        footer_products:'Products', footer_services:'Services', footer_contact:'Contact',
+        footer_tracking:'24/7 Tracking',
+        footer_p1:'Controlled Medications', footer_p2:'Nutritional Supplements',
+        footer_p3:'Pharmaceutical Products', footer_p4:'Raw Materials',
+        footer_copy:'© 2025 H2F Shipping. All rights reserved.',
+    },
+    es: {
+        nav_services:'Servicios', nav_tracking:'Rastrear', nav_about:'Nosotros', nav_countries:'Países', nav_contact:'Contacto',
+        cta_quote:'Solicitar Cotización', cta_quote_now:'Solicitar Cotización Ahora',
+        btn_track:'Rastrear Envío', btn_about_cta:'Nuestra Historia',
+        hero_line1:'YOU BUY,', hero_line2:'WE SHIP!',
+        hero_subtitle:'Transporte Farmacéutico Especializado',
+        hero_desc:'H2F es líder en logística farmacéutica internacional, ofreciendo soluciones seguras y confiables para el transporte de medicamentos y productos de salud en todo el mundo.',
+        stat_experience:'Años de Experiencia', stat_countries:'Países de Cobertura', stat_support:'Soporte Especializado',
+        tracking_title:'Rastrear Envío',
+        tracking_subtitle:'Acceda directamente al portal oficial de rastreo de cada transportista asociado a H2F Shipping.',
+        tracking_hint:'Haga clic en la tarjeta del transportista deseado para ser redirigido al sitio oficial.',
+        carrier_active:'Activo',
+        ups_desc:'Rastreo internacional en tiempo real. Ideal para envíos en EE.UU., Europa y Asia.',
+        dhl_desc:'Líder mundial en logística. Cobertura en más de 220 países con rastreo detallado.',
+        royalmail_desc:'Servicio oficial del Reino Unido. Principal socio para entregas en UK y Escocia.',
+        correios_desc:'Servicio postal oficial de Brasil. Rastreo nacional e internacional por código.',
+        fedex_desc:'Referencia en entregas express. Cobertura prioritaria para EE.UU. y mercados asiáticos.',
+        btn_track_ups:'Rastrear en UPS',
+        btn_track_dhl:'Rastrear en DHL',
+        btn_track_royalmail:'Rastrear en Royal Mail',
+        btn_track_generic:'Rastrear',
+        tag_international:'Internacional', tag_realtime:'Tiempo Real', tag_express:'Exprés',
+        tag_global:'Global', tag_doortodoor:'Puerta a Puerta',
+        tag_uk:'Reino Unido', tag_scotland:'Escocia', tag_postal:'Postal',
+        tag_brazil:'Brasil', tag_fees:'Aranceles',
+        tag_usa:'EE.UU.', tag_asia:'Asia', tag_priority:'Prioritario',
+        services_title:'Nuestros Servicios Especializados',
+        services_subtitle:'Soluciones completas para el transporte seguro de productos farmacéuticos',
+        fleet_title:'Flota Especializada',
+        fleet_desc:'Camiones equipados con el sistema PHARMA COOL para transporte climatizado de medicamentos',
+        svc1_title:'Transporte Climatizado', svc1_desc:'Mantenimiento riguroso de la cadena de frío con monitoreo 24/7.',
+        svc2_title:'Logística Internacional', svc2_desc:'Experiencia en regulaciones aduaneras y transporte global.',
+        svc3_title:'Documentación Completa', svc3_desc:'Gestión de toda la documentación necesaria para el transporte.',
+        svc4_title:'Soporte 24/7', svc4_desc:'Equipo dedicado disponible en cualquier momento para asistencia.',
+        about_title:'Compromiso con la Excelencia',
+        about_desc:'H2F Shipping nació de la necesidad de un transporte farmacéutico <strong>confiable y especializado</strong>. Nuestra misión es garantizar que los productos de salud lleguen a su destino con <strong>máxima integridad y seguridad</strong>, respetando todas las normas internacionales.',
+        about_q1_title:'Calidad Asegurada', about_q1_desc:'Certificaciones y protocolos rigurosos en toda la cadena logística.',
+        about_q2_title:'Tecnología de Vanguardia', about_q2_desc:'Monitoreo en tiempo real y rastreo avanzado de cargamentos.',
+        about_q3_title:'Equipo Especializado', about_q3_desc:'Profesionales capacitados y dedicados a la logística farmacéutica.',
+        countries_title:'Cobertura Global', countries_subtitle:'Presencia estratégica en los principales mercados farmacéuticos mundiales',
+        globe_explore:'Explorar & Zoom', globe_close:'Cerrar Mapa',
+        country_brazil:'Brasil', country_paraguay:'Paraguay', country_usa:'EE.UU.',
+        country_uk:'Reino Unido', country_scotland:'Escocia', country_uae:'Dubái', country_china:'China',
+        contact_title:'Contáctenos', contact_subtitle:'Contáctenos para solicitar una cotización o resolver sus dudas.',
+        form_name:'Nombre Completo', form_name_ph:'Su nombre',
+        form_email:'Correo Electrónico', form_email_ph:'su.correo@ejemplo.com',
+        form_message:'Mensaje', form_message_ph:'Su mensaje o detalles de la cotización',
+        form_submit:'Enviar Mensaje', whatsapp_available:'Disponible 24/7',
+        footer_products:'Productos', footer_services:'Servicios', footer_contact:'Contacto',
+        footer_tracking:'Rastreo 24/7',
+        footer_p1:'Medicamentos Controlados', footer_p2:'Suplementos Nutricionales',
+        footer_p3:'Productos Farmacéuticos', footer_p4:'Materias Primas',
+        footer_copy:'© 2025 H2F Shipping. Todos los derechos reservados.',
+    },
+    fr: {
+        nav_services:'Services', nav_tracking:'Suivre', nav_about:'À propos', nav_countries:'Pays', nav_contact:'Contact',
+        cta_quote:'Demander un Devis', cta_quote_now:'Demander un Devis Maintenant',
+        btn_track:'Suivre un Colis', btn_about_cta:'Notre Histoire',
+        hero_line1:'YOU BUY,', hero_line2:'WE SHIP!',
+        hero_subtitle:'Transport Pharmaceutique Spécialisé',
+        hero_desc:"H2F est leader en logistique pharmaceutique internationale, proposant des solutions sûres et fiables pour le transport de médicaments et de produits de santé dans le monde entier.",
+        stat_experience:"Ans d'Expérience", stat_countries:'Pays Couverts', stat_support:'Support Spécialisé',
+        tracking_title:'Suivre un Colis',
+        tracking_subtitle:"Accédez directement au portail officiel de suivi de chaque transporteur partenaire de H2F Shipping.",
+        tracking_hint:'Cliquez sur la carte du transporteur souhaité pour être redirigé vers le site officiel.',
+        carrier_active:'Actif',
+        ups_desc:"Suivi international en temps réel. Idéal pour les envois aux États-Unis, en Europe et en Asie.",
+        dhl_desc:'Leader mondial de la logistique. Couverture dans plus de 220 pays avec suivi détaillé.',
+        royalmail_desc:"Service officiel du Royaume-Uni. Principal partenaire pour les livraisons au UK et en Écosse.",
+        correios_desc:'Service postal officiel du Brésil. Suivi national et international par code.',
+        fedex_desc:"Référence en livraisons express. Couverture prioritaire pour les États-Unis et les marchés asiatiques.",
+        btn_track_ups:'Suivre avec UPS',
+        btn_track_dhl:'Suivre avec DHL',
+        btn_track_royalmail:'Suivre avec Royal Mail',
+        btn_track_generic:'Suivre',
+        tag_international:'International', tag_realtime:'Temps Réel', tag_express:'Express',
+        tag_global:'Mondial', tag_doortodoor:'Porte à Porte',
+        tag_uk:'Royaume-Uni', tag_scotland:'Écosse', tag_postal:'Postal',
+        tag_brazil:'Brésil', tag_fees:'Taxes',
+        tag_usa:'États-Unis', tag_asia:'Asie', tag_priority:'Prioritaire',
+        services_title:'Nos Services Spécialisés',
+        services_subtitle:'Solutions complètes pour le transport sécurisé de produits pharmaceutiques',
+        fleet_title:'Flotte Spécialisée',
+        fleet_desc:'Camions équipés du système PHARMA COOL pour le transport climatisé de médicaments',
+        svc1_title:'Transport Climatisé', svc1_desc:"Maintien rigoureux de la chaîne du froid avec surveillance 24h/24.",
+        svc2_title:'Logistique Internationale', svc2_desc:'Expertise en réglementations douanières et transport mondial.',
+        svc3_title:'Documentation Complète', svc3_desc:'Gestion de tous les documents nécessaires pour le transport.',
+        svc4_title:'Support 24h/24', svc4_desc:"Équipe dédiée disponible à tout moment pour vous assister.",
+        about_title:"Engagement envers l'Excellence",
+        about_desc:"H2F Shipping est né du besoin d'un transport pharmaceutique <strong>fiable et spécialisé</strong>. Notre mission est de garantir que les produits de santé arrivent à destination avec <strong>une intégrité et une sécurité maximales</strong>, dans le respect de toutes les normes internationales.",
+        about_q1_title:'Qualité Assurée', about_q1_desc:'Certifications et protocoles rigoureux dans toute la chaîne logistique.',
+        about_q2_title:'Technologie de Pointe', about_q2_desc:'Surveillance en temps réel et traçabilité avancée des cargaisons.',
+        about_q3_title:'Équipe Spécialisée', about_q3_desc:'Professionnels formés et dédiés à la logistique pharmaceutique.',
+        countries_title:'Couverture Mondiale', countries_subtitle:'Présence stratégique sur les principaux marchés pharmaceutiques mondiaux',
+        globe_explore:'Explorer & Zoomer', globe_close:'Fermer la Carte',
+        country_brazil:'Brésil', country_paraguay:'Paraguay', country_usa:'États-Unis',
+        country_uk:'Royaume-Uni', country_scotland:'Écosse', country_uae:'Dubaï', country_china:'Chine',
+        contact_title:'Contactez-nous', contact_subtitle:'Contactez-nous pour demander un devis ou poser vos questions.',
+        form_name:'Nom Complet', form_name_ph:'Votre nom',
+        form_email:'E-mail', form_email_ph:'votre.email@exemple.com',
+        form_message:'Message', form_message_ph:'Votre message ou détails du devis',
+        form_submit:'Envoyer le Message', whatsapp_available:'Disponible 24h/24',
+        footer_products:'Produits', footer_services:'Services', footer_contact:'Contact',
+        footer_tracking:'Suivi 24h/24',
+        footer_p1:'Médicaments Contrôlés', footer_p2:'Compléments Nutritionnels',
+        footer_p3:'Produits Pharmaceutiques', footer_p4:'Matières Premières',
+        footer_copy:'© 2025 H2F Shipping. Tous droits réservés.',
+    }
+};
+
+let currentLang = 'pt';
+
+function applyTranslations(lang) {
+    const dict = translations[lang];
+    if (!dict) return;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key] !== undefined) el.innerHTML = dict[key];
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (dict[key] !== undefined) el.setAttribute('placeholder', dict[key]);
+    });
+    const langAttr = { pt:'pt-BR', en:'en', es:'es', fr:'fr' };
+    document.documentElement.setAttribute('lang', langAttr[lang] || lang);
+    const titles = {
+        pt:'H2F Shipping - Transporte Farmacêutico Especializado',
+        en:'H2F Shipping - Specialized Pharmaceutical Transport',
+        es:'H2F Shipping - Transporte Farmacéutico Especializado',
+        fr:'H2F Shipping - Transport Pharmaceutique Spécialisé'
+    };
+    document.title = titles[lang] || titles.pt;
+}
+
+function setLang(lang) {
+    currentLang = lang;
+    window.__h2fCurrentLang = lang;
+    applyTranslations(lang);
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+    try { localStorage.setItem('h2f_lang', lang); } catch(e){}
+}
+
+window.__h2fApplyTranslations = applyTranslations;
+
+document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => setLang(btn.dataset.lang));
+});
+
+(function() {
+    let saved;
+    try { saved = localStorage.getItem('h2f_lang'); } catch(e){}
+    if (saved && translations[saved]) { setLang(saved); return; }
+    const browser = (navigator.language || 'pt').split('-')[0].toLowerCase();
+    setLang(['pt','en','es','fr'].includes(browser) ? browser : 'pt');
+})();
+</script>
+
+<!-- ===================== SCROLL / UX SCRIPTS ===================== -->
+<script>
+const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('active'); obs.unobserve(e.target); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+document.querySelectorAll('.scroll-reveal,.scroll-reveal-left,.scroll-reveal-right').forEach(el => obs.observe(el));
+
+window.addEventListener('scroll', () => {
+    document.querySelector('header').classList.toggle('shadow-lg', window.scrollY > 100);
+});
+
+const btn = document.getElementById('mobile-menu-btn');
+const menu = document.getElementById('mobile-menu');
+btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function(e) {
+        e.preventDefault();
+        const t = document.querySelector(this.getAttribute('href'));
+        if (t) { t.scrollIntoView({ behavior:'smooth', block:'start' }); menu.classList.add('hidden'); }
+    });
+});
+
+document.querySelectorAll('.card-glow').forEach(card => {
+    card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        const rx = (e.clientY - r.top  - r.height/2) / 10;
+        const ry = (r.width/2 - (e.clientX - r.left)) / 10;
+        card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) scale(1.02)`;
+    });
+    card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+});
+
+window.addEventListener('load', () => {
+    document.querySelectorAll('.animate-in').forEach((el, i) => { el.style.animationDelay = `${i*0.1}s`; });
+});
+</script>
+</body>
+</html>
